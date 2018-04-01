@@ -1,0 +1,75 @@
+%
+% main.tex
+% @author Sidharth Mishra
+% @description 
+% @copyright  BSD 3-Clause License
+%
+% Copyright (c) 2018, Sidharth Mishra
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%
+% * Redistributions of source code must retain the above copyright notice, this
+%  list of conditions and the following disclaimer.
+%
+% * Redistributions in binary form must reproduce the above copyright notice,
+%  this list of conditions and the following disclaimer in the documentation
+%  and/or other materials provided with the distribution.
+%
+% * Neither the name of the copyright holder nor the names of its
+%  contributors may be used to endorse or promote products derived from
+%  this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+% DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+% FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+% DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+% SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+% CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+% OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+% OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+%
+% @created Sat Mar 31 2018 20:09:01 GMT-0700 (PDT)
+% @last-modified Sat Mar 31 2018 23:34:57 GMT-0700 (PDT)
+%
+
+\documentclass[10pt, journa, final, letterpaper]{IEEEtran}
+
+\usepackage{subfiles}
+\usepackage{hyperref}
+\usepackage{bibentry}
+
+\newcommand{\bibname}{References}
+
+% new macro for typesetting code
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{~Flocker~}
+
+\author{
+    \normalsize{Gaurav~Gupta}~~\small{\href{mailto:gaurav.gupta@sjsu.edu}{gaurav.gupta@sjsu.edu}} \\
+    \normalsize{Sidharth~Mishra}~~\small{\href{mailto:sidmishraw@gmail.com}{sidmishraw@gmail.com}}%
+    \thanks{This project was done for CS-235 by Kevin~Smith.}%
+    \thanks{San~Jos\`e~State~University.~Spring 2018.}%
+    \thanks{Copyright~2018-Present~Gaurav~\&~Sidharth.}%
+}
+
+\begin{document}
+
+\maketitle
+
+\subfile{sections/abstract}
+\subfile{sections/intro}
+\subfile{sections/flocker}
+\subfile{sections/flocker_ui}
+
+%# Bibliography using BibTex and IEEE format
+\addcontentsline{toc}{section}{References} % Adds the references to TOC
+\bibliographystyle{IEEEtran}
+\bibliography{references}{}
+%# Bibliography using BibTex and IEEE format
+
+\end{document}

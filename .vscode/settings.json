@@ -1,0 +1,19 @@
+{
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=/Users/sidmishraw/Dropbox/coursework/CS_235/assignments/Web-Project/report-tex/out",
+        "%DOC%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.outputDir":
+    "/Users/sidmishraw/Dropbox/coursework/CS_235/assignments/Web-Project/report-tex/out",
+  "latex-workshop.latex.clean.enabled": true
+}

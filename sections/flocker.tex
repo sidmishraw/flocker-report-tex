@@ -1,0 +1,53 @@
+%
+% flocker.tex
+% @author Sidharth Mishra
+% @description 
+% @copyright  BSD 3-Clause License
+%
+% Copyright (c) 2018, Sidharth Mishra
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%
+% * Redistributions of source code must retain the above copyright notice, this
+%  list of conditions and the following disclaimer.
+%
+% * Redistributions in binary form must reproduce the above copyright notice,
+%  this list of conditions and the following disclaimer in the documentation
+%  and/or other materials provided with the distribution.
+%
+% * Neither the name of the copyright holder nor the names of its
+%  contributors may be used to endorse or promote products derived from
+%  this software without specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+% DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+% FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+% DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+% SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+% CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+% OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+% OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+%
+% @created Sat Mar 31 2018 22:05:54 GMT-0700 (PDT)
+% @last-modified Sat Mar 31 2018 23:45:07 GMT-0700 (PDT)
+%
+
+
+\documentclass[../main]{subfiles}
+
+\begin{document}
+
+\section{Flocker}
+
+ {\em Flocker} is the core component responsible for the visualization part of the {\em flocking} simulation. 
+ It has been implemented using the {\em p5.js}\cite{p5js} {\em Javascript} library. 
+ 
+ The source-code for {\em Flocker} has been written in {\em Typescript}(TS) which has been compiled and bundled into a single \code{.js} file using the {\em Webpack} tool.
+
+ The central idea for implementing a simulation involving agents is coming up with a object for each agent. In our case, the agents are {\em swallows}. Each swallow is given an {\em image}, {\em position}, {\em velocity}, {\em acceleration}. When a {\em swallow} spawns -- gets added to the simulation -- it is assigned a random position. Similarly, each {\em swallow} is assigned a random {\em velocity} in a random direction. This is achieved by using {\em p5.js} \code{Vector} objects. However, initially, each {\em swallow} has \code{0} {\em acceleration} -- initially, no forces are acting on the {\em swallow}.
+ 
+\end{document}
