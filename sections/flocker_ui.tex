@@ -33,7 +33,7 @@
 % OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %
 % @created Sat Mar 31 2018 22:06:06 GMT-0700 (PDT)
-% @last-modified Mon Apr 02 2018 17:51:47 GMT-0700 (PDT)
+% @last-modified Tue Apr 03 2018 14:17:12 GMT-0700 (PDT)
 %
 
 
@@ -44,6 +44,25 @@
 \section{Flocker UI}
 \label{flockerUI}
 
------ Flocker UI related stuff goes in here ----
+{\em Flocker UI} is divided into two separate segments: {\em Canvas area}, {\em Sidebar area}. Width and height of the {\em canvas area} and {\em sidebar area} are auto-configurable -- they adjust according the size of the screen/webpage.
+Features and styling for the UI component has implemented using {\em jQuery2.1} \cite{jquery} and {\em CSS3} \cite{css3}.
+
+\subsection{Canvas Area}
+\label{canvasArea}
+
+The {\em canvas area} illustrates the motion of flying swallows. The user can add new swallows to the simulation by clicking on the {\em canvas area}. The UI layer only deals with the placement of the {\em canvas area}, the simulation is handled by the {\em flocker core} covered in \ref{flocker}. Also, when the mouse is over the {\em canvas area}, the cursor changes into a {\em swallow}~[Fig. \ref{swallowImg}] indicating that the user can add a swallow at the point of left mouse button click. Moreover, double-clicking the secondary mouse button -- right mouse button -- inside the canvas area causes the {\em canvas area} to enter the full-screen mode, and the {\em sidebar area} is hidden. The {\em sidebar area} comes back when the user performs the same action or does a mouse click on the {\em canvas area}.
+
+The background color of the {\em canvas area} can be changed using the \code{R}, \code{G}, and \code{B} (Red, Green, and Blue) slider available in the {\em sidebar area}. The \code{R}, \code{G}, and \code{B} slider behaviour can be controlled using the range slider or input entry on the {\em sidebar}. If the range slider is moved in the positive x-direction or negative x-direction while keeping the left click of mouse-left button held down, it will result in increasing or decreasing the color intensity of the selected color. Alternatively, a user could also use the input provided corresponding to \code{R}, \code{G}, or \code{B} values to increase or decrease the intensity of the corresponding color. With the input box selected -- user can use \code{TAB} button as usual -- if a user holds the {\em up arrow key} or {\em down arrow key}, it will result in increase or decrease of the intensity of the corresponding color. If the user specifies the intensity of the color above \code{255} or below \code{0} in the input box, they will get an error specifying that the value of the corresponding color should be in the range of \code{0-255}.
+
+\subsection{Sidebar Area}
+\label{sidebarArea}
+
+The width of the {\em sidebar area} is re-sizable. We change the mouse pointer -- affordance -- to the {\em col-resize} pointer to let the user know where to click and drag to resize the {\em sidebar area}. In order to resize the sidebar, the user must click and hold their left mouse button while dragging their mouse in either the positive x-direction or negative x-direction. The resizable property of the sidebar is restricted to be resized between the range \code{300-400~pixels}~--~to prevent the UI from distorting.
+
+To control the {\em cohesion}, {\em alignment}, and {\em separation} steering forces of the simulation, range sliders and input entries are provided. We limit the weights of these forces to the range \code{0-5 units} and allow changes in steps of \code{0.1 units}. Similarly, we limit the desired strength of these forces to the range \code{0-300 units} and allow changes in steps of \code{5 units}.
+
+The range slider can be moved in the positive x-direction or negative x-direction to increase or decrease the value of the property while holding the left mouse button down. The value for the property set by the slider is reflected in the corressponding text input box. Alternatively, to increase or decrease the value for these steering forces, the user can hold the up or down arrow keys of the keyboard or enter a value in their corressponding text input boxes.
+
+If the value entered is outside the range, an error message is displayed right below the property specifying the valid range for the property. One would argue, it is a better option to give out the ranges allowed up-front as a tooltip but, we wanted to show the range only in the error. This is because the user doesn't really need much information while playing with the simulation, and this information is only necessary when they make a mistake -- enter absurd values.
 
 \end{document}
