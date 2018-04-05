@@ -33,7 +33,7 @@
 % OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %
 % @created Sat Mar 31 2018 22:05:54 GMT-0700 (PDT)
-% @last-modified Mon Apr 02 2018 17:22:42 GMT-0700 (PDT)
+% @last-modified Wed Apr 04 2018 22:12:51 GMT-0700 (PDT)
 %
 
 
@@ -48,11 +48,11 @@
 
 The source-code \cite{flockerSrc} for {\em flocker} has been written in \mbox{Typescript}~(TS) \cite{ts} which has been compiled and bundled into a single \code{.js} file using the \mbox{Webpack} tool \cite{wbpack}.
 
-The central idea for implementing a simulation involving agents is coming up with a model for each agent. In our case, the agents -- {\em swallows} -- are {\em plain old Javascript objects} (POJO). Each swallow is given an \code{image}, \code{position}, \code{velocity}, and \code{acceleration}. The \code{image} is a \code{.PNG} image file of a swallow bird; \code{position}, \code{velocity}, and \code{acceleration} are p5.js \code{Vectors}. When a swallow spawns -- gets added to the simulation -- it is assigned a random position. Similarly, each swallow is assigned a random \code{velocity} in a random direction. However, initially, each swallow has zero \code{acceleration} -- no forces are acting on the swallow. Furthermore, internally each swallow has a {\em 4 x 4 matrix} to keep track of its position, scaling, and rotation. This matrix has been designed to be similar to {\em openframework's} \code{ofMatrix4x4} but, with utility methods specific to {\em flocker} like applications.
+The key step in implementing a simulation involving \mbox{\em autonomous~agents} is coming up with a model for each agent. In our case, the agents -- {\em swallows} -- are {\em plain old Javascript objects} (POJO). Each swallow is given an \code{image}, \code{position}, \code{velocity}, and \code{acceleration}. The \code{image} is a \code{.PNG} image file of a swallow bird; \code{position}, \code{velocity}, and \code{acceleration} are p5.js \code{Vectors}. When a swallow spawns -- gets added to the simulation -- it is \mbox{assigned} a random position. Similarly, each swallow is assigned a random \code{velocity} in a random direction. However, initially, each swallow has zero \code{acceleration} -- no forces are acting on the swallow. Furthermore, internally each swallow has a {\em 4 x 4 matrix} to keep track of its position, scaling, and rotation. This matrix has been designed to be similar to {\em openframework's} \code{ofMatrix4x4} but, with utility methods specific to {\em flocker} like applications.
 
-In our simulation, there are three types of forces acting on a swallow: {\em cohesion}, {\em separation}, and {\em alignment}. When the swallow flies, for each tick, the \code{acceleration} is the the aggregate of these three forces. Assuming each swallow to be of unit mass, using the equation \code{F = ma}, we can get \code{F = a}. The resultant \code{acceleration} updates the swallow's \code{velocity} which in turn modifies the swallow's \code{position}. The direction of the swallow's movement is determined from its \code{velocity}.
+In our simulation, there are three types of {\em steering forces} acting on a swallow: {\em cohesion}, {\em separation}, and {\em alignment}. When the swallow flies, for each tick, the \code{acceleration} is the the aggregate of these three forces. Assuming each swallow to be of unit mass, using the equation \code{F = ma}, we can get \code{F = a}. The resultant \code{acceleration} updates the swallow's \code{velocity} which in turn modifies the swallow's \code{position}. The direction of the swallow's movement is determined from its \code{velocity}.
 
-Since, there are three forces acting on a swallow influencing its flight behavior, we expose their desired strength and weights to the end user. The end user has the ability to modify the strength and weights of these forces to influence the behavior of the swallows and visualize the {\em flocking behavior}. The design choice for the user-interface (UI) will be covered in the next section \ref{flockerUI}.
+Since, there are three forces influencing a swallow's flight behavior, we expose their desired strength and weights to the user. The {\em flocker ui} connects the user with the simulation core allowing them to modify the three steering forces. The design choice for the user-interface (UI) will be covered in [Section \ref{flockerUI}].
 
 {\em Note}: We use the words {\em neighborhood} --- {\em simulation space}, and {\em peer} --- {\em neighbor} interchangeably while talking about the computation of the three steering forces acting on the swallow.
 
@@ -61,19 +61,19 @@ Since, there are three forces acting on a swallow influencing its flight behavio
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.15]{resources/swallow.png}
+	\includegraphics[scale=0.15, frame]{resources/swallow.png}
 	\caption{The image used for a swallow.}
 	\label{swallowImg}
 \end{figure}
 
 The {\em swallow} [Fig. \ref{swallowImg}] is the bird chosen for this simulation. The design was inspired by the exhibit at the {\em Exploratorium, San Francisco} named {\em Flock} \cite{jillflock}. The image however is a \code{.PNG} file created from a screenshot of an icon by Prahlad \cite{apSwallow}.
 
-The swallow is designed to be an agent represented as a POJO that is intelligent enough to navigate through the environment and exhibit the flocking behavior according to the three forces.
+The swallow is designed to be an {\em autonomous agent} represented as a POJO that is intelligent enough to navigate through the environment and exhibit the flocking behavior with the three steering forces action upon it. The following paragraphs illustrate how the steering forces have been implemented in the flocker core.
 
 \subsubsection{Separation}
 \label{separation}
 
-{\em Separation} is the force acting on a swallow that enables it to maintain a certain separation from its peers in the simulation space. It is a kind of collision prevention mechanism. Initially, each swallow starts with a desired separation strength of 50 units and the weight of this separation force is 3 units. Each swallow computes the steering separation force after taking into account its distance from all of its peers in the simulation space -- it is exhaustive. Once the steering force has been computed, the force acts on the swallow changing its acceleration causing it to stay clear of its peers in the simulation. The separation steering force algorithm [Fig. \ref{separationLogic}] shows how the separation force is computed for the swallow. It is based on the algorithms in \cite{reynolds1999steering, danshiffman}.
+{\em Separation} is the force acting on a swallow that enables it to maintain a certain separation from its peers in the simulation space. It is a kind of collision prevention mechanism. Initially, each swallow starts with a desired separation strength of \code{50 units} and the weight of this separation force is \code{3 units}. Each swallow computes the steering separation force after taking into account its distance from all of its peers in the simulation space -- it is exhaustive. Once the steering force has been computed, the force acts on the swallow changing its acceleration causing it to stay clear of its peers in the simulation. The separation steering force algorithm [Fig. \ref{separationLogic}] shows how the separation force is computed for the swallow. It is based on the algorithms in \cite{reynolds1999steering, danshiffman}.
 
 \begin{figure}
 	\begin{verbatim}
@@ -103,7 +103,7 @@ Swallow::separation :: () -> Vector
 
 \begin{figure}
     \centering
-	\includegraphics[scale=0.30, width=250pt]{resources/flocker_max_separation.png}
+	\includegraphics[scale=0.30, width=250pt, frame]{resources/flocker_max_separation.png}
 	\caption{Max separation simulation.}
 	\label{maxSeparationImg}
 \end{figure}
@@ -112,7 +112,7 @@ Swallow::separation :: () -> Vector
 \label{alignment}
 
 {\em Alignment} is the force acting on a swallow that enables it to align itself with its peers in the simulation space.
-When the swallow aligns itself, it moves in the same direction with the same velocity as its peers. Initially, each swallow starts with a desired alignment strength of 50 units and the weight of this alignment force is 2 units. Each swallow computes the steering alignment force after computing the average velocity of all its peers. This enables it to move in the same direction. This too like separation \ref{separation} is exhaustive. The alignment steering force algorithm [Fig. \ref{alignmentLogic}] shows how the alignment force is computed for the swallow. It too is based on the algorithms in \cite{reynolds1999steering, danshiffman}.
+When the swallow aligns itself, it moves in the same direction with the same velocity as its peers. Initially, each swallow starts with a desired alignment strength of \code{50 units} and the weight of this alignment force is \code{2 units}. Each swallow computes the steering alignment force after computing the average velocity of all its peers. This enables it to move in the same direction. This too like separation [Section \ref{separation}] is exhaustive. The alignment steering force algorithm [Fig. \ref{alignmentLogic}] shows how the alignment force is computed for the swallow. It too is based on the algorithms in \cite{reynolds1999steering, danshiffman}.
 
 \begin{figure}
 	\begin{verbatim}
@@ -140,7 +140,7 @@ Swallow::alignment :: () -> Vector
 
 \begin{figure}
     \centering
-	\includegraphics[scale=0.30, width=250pt]{resources/flocker_max_alignment.png}
+	\includegraphics[scale=0.30, width=250pt, frame]{resources/flocker_max_alignment.png}
 	\caption{Max alignment simulation.}
 	\label{maxAlignmentImg}
 \end{figure}
@@ -149,7 +149,7 @@ Swallow::alignment :: () -> Vector
 \label{cohesion}
 
 {\em Cohesion} is the force acting on a swallow that enables it to group together with its peers in the simulation space. This force steers the swallow towards its peers so that it can approach its peers and form a group -- flock.
-In a sense, it can be considered as the gravitational force pulling in the swallows. Initially, each swallow starts with a desired cohesion strength of 50 units and the weight of this cohesion force is 2 units. Each swallow computes the steering cohesion force after computing the average position of all its peers. Then, the swallow moves towards this average position -- the center of gravity of the simulation space. This too like separation \ref{separation}, and alignment \ref{alignment} is exhaustive. The cohesion steering force algorithm [Fig. \ref{cohesionLogic}] shows how the cohesion force is computed for the swallow. It too is based on the algorithms in \cite{reynolds1999steering, danshiffman}.
+In a sense, it can be considered as the gravitational force pulling in the swallows towards the {\em center of gravity}. Initially, each swallow starts with a desired cohesion strength of \code{50 units} and the weight of this cohesion force is \code{2 units}. Each swallow computes the steering cohesion force after computing the average position of all its peers. Then, the swallow moves towards this average position -- the {\em center of gravity} of the simulation space. This too like separation [Section \ref{separation}], and alignment [Section \ref{alignment}] is exhaustive. The cohesion steering force algorithm [Fig. \ref{cohesionLogic}] shows how the cohesion force is computed for the swallow. It too is based on the algorithms in \cite{reynolds1999steering, danshiffman}.
 
 \begin{figure}
 	\begin{verbatim}
@@ -187,7 +187,7 @@ Swallow::seek :: (target: Vector) -> Vector
 
 \begin{figure}
     \centering
-	\includegraphics[scale=0.30, width=250pt]{resources/flocker_max_cohesion.png}
+	\includegraphics[scale=0.30, width=250pt, frame]{resources/flocker_max_cohesion.png}
 	\caption{Max cohesion simulation.}
 	\label{maxCohesionImg}
 \end{figure}
@@ -197,8 +197,32 @@ Swallow::seek :: (target: Vector) -> Vector
 
 The entire simulation runs inside a HTML \code{canvas} element which is generated by the p5.js library. We generate the canvas with the same dimensions as the content area of our webpage -- the canvas is re-rendered when the window resizes. Furthermore, we make the simulation wrap around the edges so that the swallows do not fall off the viewable area -- the direction of motion and velocity are preserved when wrapping around, only the position is affected.
 
-By default, the simulation caps the acceleration to a maximum value of \code{0.03}, and the velocity to a maximum value of \code{2.0}. This prevents the swallows from moving too fast and produces a smooth motion. The simulation starts out with \code{30} swallows, all at randomly generated positions. The user has the ability to add in a new swallow to the simulation by clicking on any area of the canvas. The new swallow is added at the point of mouse click but, with random velocity and direction~--~~to keep the motion random.
+By default, the simulation caps the acceleration to a maximum value of \code{0.03}, and the velocity to a maximum value of \code{2.0}. This prevents the swallows from moving too fast and produces a smooth motion. The simulation starts out with \code{30} swallows, all at randomly generated positions. 
 
-{\em Flocker} core has been designed as a standalone \mbox{library} that can be plugged in into different UI/view layer \mbox{implementations}. Comparing it with a traditional \mbox{\em model-view-controller} (MVC) architecture, the core would consist of the {\em model}, and the {\em controller} layers. Our UI is strictly restricted to the {\em view} layer only.
+The user has the ability to add in a new swallow to the simulation by clicking on any area of the canvas or using the {ctrl + c} key combination to add a swallow to the center of the canvas. The new swallow is added with random velocity and direction~--~~to keep the motion random. Similarly, pressing \code{ctrl + r} key combination removes a swallow from the simulation. The swallow removed is the oldest swallow; pressing \code{ctrl + d} enables the {\em debug view}. In the {\em debug view}, the canvas displays a grid which can be used to visually determine the positions of each swallow in the simulation space. Moreover, holding the \code{ctrl} {\em meta-key} displays the keymap information [Fig. \ref{metaAssistMenu}] to the user at the center of the canvas. This works as a quick reference -- inspired by {\em Ubuntu's} keymap reference when holding the {\em super key} \cite{ubuntuOverlay}.
+
+The simulation also displays the {\em frame-rate} and {\em swallow count} at the top left corner of the canvas [Fig. \ref{canvasExtraInfo}]. This is additional information that could be helpful to some users.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.36, width=250pt, frame]{resources/meta_assist_menu.png}
+	\caption{Assist menu}
+	\label{metaAssistMenu}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.35, width=250pt, frame]{resources/additional_canvas_text.png}
+	\caption{Frame-rate and swallow count.}
+	\label{canvasExtraInfo}
+\end{figure}
+
+The {\em flocker} core has been designed as a standalone \mbox{library} that can be plugged into different UI/view layer \mbox{implementations}. Comparing it with a traditional \mbox{\em model-view-controller} (MVC) architecture, the core would consist of the {\em model}, and the {\em controller} layers. Our UI is strictly restricted to the {\em view} layer only.
+
+\subsection{Testing the simulation}
+\label{flockerTesting}
+
+The {\em flocker core} was tested by checking the swallow's behavior upon changing the forces. The {\em debug grid} proved to be very helpful when testing the swallow's motion. To get a better understanding of how the swallows were behaving, we rendered a rectangular border around them. This allowed us to visually reason about the space each swallow took in the simulation space. Moreover, the {\em 4 x 4 matrix} utility was tested by using different values for translation, rotation, and scaling vectors. The early prototype \cite{flockerProto} also enabled us to iron out several bugs in the swallow's motion and we were able to get the smooth motion for the swallows.
+
 
 \end{document}

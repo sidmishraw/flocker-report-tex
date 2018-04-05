@@ -33,7 +33,7 @@
 % OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %
 % @created Sat Mar 31 2018 22:05:59 GMT-0700 (PDT)
-% @last-modified Mon Apr 02 2018 17:45:28 GMT-0700 (PDT)
+% @last-modified Wed Apr 04 2018 19:47:48 GMT-0700 (PDT)
 %
 
 
@@ -44,8 +44,8 @@
 \section{Introduction}
 \label{intro}
 
-The {\em flocking} behavior of birds in flight has been simulated by several computer and mathematical models. {\em Flocker} is inspired from the exhibit at {\em Exploratorium, San Francisco} \cite{jillflock}. However, unlike the exhibit, {\em flocker} is a browser based simulator.
+The {\em flocking} behavior of birds in flight has been simulated by several computer and mathematical models. {\em Flocker} is inspired from the exhibit at {\em Exploratorium, San Francisco} \cite{jillflock}. However, unlike the exhibit, {\em flocker} is a browser based simulator. Moreover, unlike the three physical dials of the exhibit \cite{jillflock}, our simulator has finer controls for manipulating the three steering forces affecting the flight behavior of the birds in the simulation.
 
-The simulator is strictly divided into two parts: \mbox{\em Flocker core}, \mbox{\em Flocker UI}. {\em Flocker core} is covered in \ref{flocker} and {\em flocker UI} is covered in \ref{flockerUI}. The {\em flocker core} is responsible for the simulation. It defines the birds and their behavior. The {\em flocker ui} is responsible for connecting the end user with the simulation. By enabling the end user to modify the key variables, they are able to visualize the flocking behavior of the birds in the simulation space.
+Our simulator is strictly divided into two parts: \mbox{\em flocker core}, and \mbox{\em flocker UI}. {\em Flocker core} is covered in [Section \ref{flocker}] and {\em flocker UI} is covered in [Section \ref{flockerUI}]. The {\em flocker core} is responsible for the simulation. The birds are {\em autonomous agents} flying in the simulation space and their flight behavior is influenced by three steering forces which are controlled by the user. The {\em flocker ui} is responsible for enabling the user to modify these three steering forces and view the effects on the flock instantaneously. Moreover, the user also has the ability to change the background color of the simulation space -- saving the canvas as an image makes great backgrounds for desktops and mobile devices.
 
 \end{document}
